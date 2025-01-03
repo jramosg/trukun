@@ -4,6 +4,7 @@ kit.git-config.edn
 hs_err_pid*.log
 .cpcache/
 target
+!target/trukun-standalone.jar
 log/
 .shadow-cljs/
 node_modules/
@@ -18,3 +19,6 @@ modules/
 .clj-kondo/.cache/
 .calva/output-window/
 .lsp/.cache/
+
+.secrets.edn
+.env

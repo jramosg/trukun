@@ -19,7 +19,7 @@
                                   :keywordize true}
                          :cookies true
                          :session {:flash true
-                                   :cookie-name "kit.zerbait"
+                                   :cookie-name "kit.trukun"
                                    :cookie-attrs {:max-age 86400
                                                   :http-only true
                                                   :same-site :strict}}
@@ -38,6 +38,8 @@
  {:base-path "/api"
   :env #ig/ref :system/env}
 
+ :trukun/datasource #ref [:trukun/secrets :db-spec]
+
  :router/routes
  {:routes #ig/refset :reitit/routes}
 
@@ -52,6 +54,6 @@
  :db.sql/migrations {:store :database,
                      :db {:datasource #ig/ref :db.sql/connection},
                      :migrate-on-init? true}
- :db.sql/connection #profile {:dev {:jdbc-url "jdbc:postgresql://localhost:5432/zerbait_dev?user=zerbait&password=zerbait"},
-                              :test {:jdbc-url "jdbc:postgresql://localhost:5432/zerbait_test?user=zerbait&password=zerbait"},
-                              :prod {:jdbc-url #env JDBC_URL}}}
+ :db.sql/connection {:jdbc-url #ref [:trukun/secrets :jbdc-url]}
+
+ :trukun/secrets  #include "../.secrets.edn"}
