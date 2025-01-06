@@ -1,4 +1,4 @@
-(ns kit.trukun.web.middleware.log 
+(ns kit.trukun.web.middleware.log
   (:require
    [clojure.tools.logging :as log]))
 

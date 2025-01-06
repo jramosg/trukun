@@ -23,7 +23,6 @@
                        :on-success [::on-create]
                        :on-failure      [::on-create]}]]}))
 
-
 (rf/reg-event-db
  ::on-create
  (fn [db [_ result]]
@@ -41,7 +40,7 @@
                        :on-failure [::on-login]}]]}))
 
 (rf/reg-event-db
- ::on-login 
+ ::on-login
  (fn [db [_ result]]
    (assoc db :login-result result)))
 
@@ -63,7 +62,7 @@
 
 (rf/reg-event-fx
  ::private-request
- (fn [{:keys [db]} [_ ]]
+ (fn [{:keys [db]} [_]]
    {:fx [[:http-xhrio {:method :post
                        :uri "/api/private-request"
                        :format (ajax/json-request-format)
@@ -95,7 +94,7 @@
             :type "password"}]
    [:button {:on-click #(rf/dispatch [::login @login])}
     "LOGIN"]
-    [:br]
+   [:br]
    [:br]
    [:div (str @(rf/subscribe [::login-result]))]
    [:br]
@@ -106,7 +105,7 @@
    [:br]
    [:button {:on-click #(rf/dispatch [::private-request])}
     "PRIV request"]
-    [:br]
+   [:br]
    [:br]
    [:button {:on-click #(rf/dispatch [::refresh-token])}
     "refresh token"]])

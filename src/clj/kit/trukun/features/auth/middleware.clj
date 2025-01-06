@@ -13,11 +13,11 @@
       (if token
         (let [claims (auth.services/verify-token token)]
           (if (:error claims)
-          (do (log/info "unauthorized request " {})
-              (http-response/unauthorized claims))
+            (do (log/info "unauthorized request " {})
+                (http-response/unauthorized claims))
             (handler (assoc request :identity (:user claims)))))
-       (do (log/info "missing token" {})
-           (http-response/unauthorized {:error "Missing token"}))))))
+        (do (log/info "missing token" {})
+            (http-response/unauthorized {:error "Missing token"}))))))
 
 (def wrap-authentication
   [{:name ::authentication

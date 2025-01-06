@@ -1,7 +1,7 @@
 (ns kit.trukun.test-utils
   (:require
-    [kit.trukun.core :as core]
-    [integrant.repl.state :as state]))
+   [kit.trukun.core :as core]
+   [integrant.repl.state :as state]))
 
 (defn system-state
   []

@@ -1,4 +1,4 @@
-(ns kit.trukun.db.handlers 
+(ns kit.trukun.db.handlers
   (:require
    [clojure.tools.logging :as log]
    [kit.trukun.config :refer [system]]
@@ -17,28 +17,26 @@
        :error (.getMessage e)})))
 
 (defn insert! [table row]
-   (try
-    {:success? true 
+  (try
+    {:success? true
      :result (sql/insert!
               (:trukun/datasource @system)
               table
               row)}
     (catch java.sql.SQLException e
-      (log/error "Database error occurred while inserting into" table) 
+      (log/error "Database error occurred while inserting into" table)
       {:success? false
        :error (.getMessage e)})))
 
-(comment 
-  
-  
+(comment
+
   (:trukun/datasource @system)
 
   ;(:trukun/datasource @config)
   ;(next.jbdc/get-datasource (:trukun/datasource @config))
-  (insert! 
+  (insert!
    :users {:id (random-uuid)
            :email "as"
            :password "a"})
-  
-  (query [ "SELECT * FROM users"])
-  )
+
+  (query ["SELECT * FROM users"]))

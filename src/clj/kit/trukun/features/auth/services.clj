@@ -4,7 +4,7 @@
    [kit.trukun.config :refer [system]]))
 
 (def auth-token-max-age 1800 ; 30 mins
-)
+  )
 
 (def refresh-token-max-age 604800 ; 7 days  (* 7 24 60 60)
   )
@@ -42,5 +42,4 @@
       (.nextBytes (java.security.SecureRandom.) random-bytes)
       (.encodeToString (java.util.Base64/getEncoder) random-bytes)))
 
-  (generate-secret-key)
-  )
+  (generate-secret-key))
