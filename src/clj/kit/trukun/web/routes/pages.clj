@@ -5,8 +5,7 @@
    [integrant.core :as ig]
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
-   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-   [clojure.tools.logging :as log]))
+   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]))
 
 (defn wrap-page-defaults []
   (let [error-page (layout/error-page
