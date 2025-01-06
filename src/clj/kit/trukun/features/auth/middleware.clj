@@ -1,9 +1,10 @@
 (ns kit.trukun.features.auth.middleware
   (:require
+   [clojure.tools.logging :as log]
    [kit.trukun.config :refer [system]]
    [kit.trukun.features.auth.services :as auth.services]
-   [ring.util.http-response :as http-response]
-   [ring.middleware.anti-forgery :as ring.anti-forgery]))
+   [ring.middleware.anti-forgery :as ring.anti-forgery]
+   [ring.util.http-response :as http-response]))
 
 (defn- wrap-token-authentication
   [handler]
@@ -12,9 +13,11 @@
       (if token
         (let [claims (auth.services/verify-token token)]
           (if (:error claims)
-            (http-response/unauthorized claims)
+          (do (log/info "unauthorized request " {})
+              (http-response/unauthorized claims))
             (handler (assoc request :identity (:user claims)))))
-        (http-response/unauthorized {:error "Missing token"})))))
+       (do (log/info "missing token" {})
+           (http-response/unauthorized {:error "Missing token"}))))))
 
 (def wrap-authentication
   [{:name ::authentication

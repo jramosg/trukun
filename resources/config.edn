@@ -1,4 +1,0 @@
-{:secrets #include "../.secrets.edn"
-
- :jbdc-url #profile {:test #ref [:secrets :jbdc-url-dev]
-                     :prod #ref [:secrets :jbdc-url-test]}}

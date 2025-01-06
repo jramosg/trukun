@@ -44,6 +44,5 @@
 
 (comment
   @system
-  (config/config {})
   (stop-app)
   (start-app {:profile :dev}))

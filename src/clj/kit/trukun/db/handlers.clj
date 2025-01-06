@@ -12,7 +12,7 @@
       {:success? true
        :result (vec result)})
     (catch Exception e
-      (log/error "Error occurred while querying table"  )
+      (log/error "Error occurred while querying table" {:query sql-statement})
       {:success? false
        :error (.getMessage e)})))
 
@@ -39,4 +39,6 @@
    :users {:id (random-uuid)
            :email "as"
            :password "a"})
+  
+  (query [ "SELECT * FROM users"])
   )

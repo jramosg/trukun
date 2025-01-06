@@ -46,8 +46,7 @@
 
 
 (comment
-  (require '[kit.trukun.config :as config :refer [system]]
-           '[kit.trukun.env :refer [defaults]])
+  (require '[kit.trukun.config  :refer [system]])
   
   (go)
   state/system

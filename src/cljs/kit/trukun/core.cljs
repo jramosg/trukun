@@ -69,6 +69,14 @@
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})}]]}))
 
+(rf/reg-event-fx
+ ::refresh-token
+ (fn [{:keys [db]} [_]]
+   {:fx [[:http-xhrio {:method :post
+                       :uri "/api/refresh-token"
+                       :format (ajax/json-request-format)
+                       :response-format (ajax/json-response-format {:keywords? true})}]]}))
+
 (defn home-page []
   [:<>
    [:input
@@ -97,7 +105,11 @@
    [:br]
    [:br]
    [:button {:on-click #(rf/dispatch [::private-request])}
-    "PRIV request"]])
+    "PRIV request"]
+    [:br]
+   [:br]
+   [:button {:on-click #(rf/dispatch [::refresh-token])}
+    "refresh token"]])
 
 ;; -------------------------
 ;; Initialize app

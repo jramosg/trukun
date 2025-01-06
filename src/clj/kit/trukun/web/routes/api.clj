@@ -7,6 +7,7 @@
    [kit.trukun.web.controllers.health :as health]
    [kit.trukun.web.middleware.exception :as exception]
    [kit.trukun.web.middleware.formats :as formats]
+   [kit.trukun.web.middleware.log :refer [wrap-log]]
    [reitit.coercion.malli :as malli]
    [reitit.ring.coercion :as coercion]
    [reitit.ring.middleware.muuntaja :as muuntaja]
@@ -34,7 +35,8 @@
   {:coercion   malli/coercion
    :muuntaja   formats/instance
    :swagger    {:id ::api}
-   :middleware [;; query-params & form-params
+   :middleware [wrap-log
+   ;; query-params & form-params
                 parameters/parameters-middleware
                   ;; content-negotiation
                 muuntaja/format-negotiate-middleware
@@ -69,7 +71,9 @@
      {:post {:handler auth/login
              :parameters {:body [:map
                                  [:email string?]
-                                 [:password string?]]}}}]]
+                                 [:password string?]]}}}]
+    ["/refresh-token"
+     {:post {:handler auth/refresh-token}}]]
    ["/swagger.json"
     {:get {:no-doc  true
            :swagger {:info {:title "kit.trukun API"}}
