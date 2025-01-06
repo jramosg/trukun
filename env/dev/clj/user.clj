@@ -3,17 +3,15 @@
   (:require
    [clojure.pprint]
    [clojure.spec.alpha :as s]
-   [clojure.tools.namespace.repl :as repl]
-   [criterium.core :as c]                                  ;; benchmarking
+   [clojure.tools.namespace.repl :as repl] ;; benchmarking
    [expound.alpha :as expound]
    [integrant.core :as ig]
-   [integrant.repl :refer [clear go halt prep init reset reset-all]]
+   [integrant.repl :refer [go reset]]
    [integrant.repl.state :as state]
-   [kit.api :as kit]
-   [lambdaisland.classpath.watch-deps :as watch-deps]      ;; hot loading for deps
+   [kit.trukun.config :refer [system-config]]
    [kit.trukun.core]
-   [kit.trukun.config]
-   ))
+   [lambdaisland.classpath.watch-deps :as watch-deps] ;; hot loading for deps
+))
 
 ;; uncomment to enable hot loading for deps
 (watch-deps/start! {:aliases [:dev :test]})
@@ -47,7 +45,7 @@
 
 (comment
   (require '[kit.trukun.config  :refer [system]])
-  
+  (system-config {:profile :dev})
   (go)
   state/system
   (reset! system state/system)

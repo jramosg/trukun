@@ -56,4 +56,4 @@
                      :migrate-on-init? true}
  :db.sql/connection {:jdbc-url #ref [:trukun/secrets :jbdc-url]}
 
- :trukun/secrets  #include "../.secrets.edn"}
+ :trukun/secrets  #include ".secrets.edn"}

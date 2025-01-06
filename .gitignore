@@ -20,5 +20,5 @@ modules/
 .calva/output-window/
 .lsp/.cache/
 
-.secrets.edn
+resources/.secrets.edn
 .env
