@@ -4,5 +4,5 @@
 
 (defn wrap-log [handler]
   (fn [request]
-    (log/info ::request request #_(select-keys request [:uri :request-method]))
+    (log/info ::request (select-keys request [:uri :request-method :header :headers ]))
     (handler request)))
