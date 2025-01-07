@@ -4,7 +4,12 @@
     [babashka.fs :refer [copy-tree]] 
     [babashka.process :refer [shell]])) 
 
- (defn build-cljs [] (println "npx shadow-cljs release app...") (let [{:keys [exit], :as s} (shell "npx shadow-cljs release app")] (when-not (zero? exit) (throw (ex-info "could not compile cljs" s))) (copy-tree "target/classes/cljsbuild/public" "target/classes/public")))
+ (defn build-js []
+   (println "Running npm run build...")
+   (let [{:keys [exit], :as s} (shell "npm run build")]
+     (when-not (zero? exit)
+       (throw (ex-info "could not build with npm run build" s)))
+     (copy-tree "src/js/dist" "target/classes/public")))
 
 (def lib 'kit/trukun)
 (def main-cls (string/join "." (filter some? [(namespace lib) (name lib) "core"])))
@@ -31,11 +36,11 @@
                :target-dir class-dir}))
 
 (defn uber [_]
+  (build-js)
   (println "Compiling Clojure...")
   (b/compile-clj {:basis basis
                   :src-dirs ["src/clj" "resources" "env/prod/resources" "env/prod/clj"]
                   :class-dir class-dir}) 
-  (build-cljs)
   (println "Making uberjar...")
   (b/uber {:class-dir class-dir
            :uber-file uber-file
