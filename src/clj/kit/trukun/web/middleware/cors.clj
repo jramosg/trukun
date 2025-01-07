@@ -4,6 +4,7 @@
 (defn wrap-cors [handler]
   (ring.cors/wrap-cors handler
                        :access-control-allow-origin [#".*"]
-                       :access-control-allow-credentials "true"
+                       :access-control-allow-credentials true
                        :access-control-allow-methods [:get :post :put :delete :patch]
-                       :access-control-allow-headers ["Content-Type" "Authorization"]))
+                       :access-control-allow-headers ["Content-Type" "Authorization" "Cookie"]
+                       :access-control-expose-headers ["Set-Cookie"]))
