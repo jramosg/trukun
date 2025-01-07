@@ -12,4 +12,5 @@
                       :asset-path "/js"
                       :modules    {:app {:entries [kit.trukun.core]
                                          :init-fn kit.trukun.core/init!}}
-                      :devtools   {:after-load kit.trukun.core/mount-root}}}}
+                      :devtools   {:after-load kit.trukun.core/mount-root}
+                      :dev {:compiler-options {:closure-defines {API_URI "localhost"}}}}}}

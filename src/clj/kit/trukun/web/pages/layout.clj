@@ -37,7 +37,7 @@
         [:link {:href "/css/screen.css" :rel "stylesheet" :type "text/css"}]
         [:body
          [:nav]
-         [:section [:div.content [:h2 "Hello World!"]]]
+         [:section [:div.content [:h2 "Kaixo TRUKUN!"]]]
          [:div#app]
          [:script {:src "/js/app.js"}]]])
       str
