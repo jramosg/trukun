@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">trukun</string>
+    <string name="title_activity_main">trukun</string>
+    <string name="package_name">trukun.app</string>
+    <string name="custom_url_scheme">trukun.app</string>
+</resources>

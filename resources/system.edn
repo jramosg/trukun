@@ -56,4 +56,8 @@
                      :migrate-on-init? true}
  :db.sql/connection {:jdbc-url #ref [:trukun/secrets :jbdc-url]}
 
- :trukun/secrets  #include ".secrets.edn"}
+ :trukun/secrets  #include ".secrets.edn"
+
+ :trukun/api-url #profile {:dev "http://localhost:3000/api/"
+                           :test "http://localhost:3000/api/"
+                           :prod "www.trukun.com"}}

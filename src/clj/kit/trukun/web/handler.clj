@@ -50,3 +50,6 @@
 
 (defmethod ig/init-key :trukun/secrets [_ secrets]
   secrets)
+
+(defmethod ig/init-key :trukun/api-url [_ api-url]
+  api-url)

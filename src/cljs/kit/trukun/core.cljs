@@ -12,11 +12,14 @@
 (def state (r/atom {}))
 (def login (r/atom {}))
 
+(defn- api-uri [s]
+  (str js/window.trukun.API_URL s))
+
 (rf/reg-event-fx
  ::create-user
  (fn [{:keys [db]} [_ user]]
    {:fx [[:http-xhrio {:method :post
-                       :uri  "/api/user"
+                       :uri (api-uri "user")
                        :params user
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})
@@ -32,7 +35,7 @@
  ::login
  (fn [{:keys [db]} [_ user]]
    {:fx [[:http-xhrio {:method :post
-                       :uri "/api/login"
+                       :uri (api-uri "login")
                        :params user
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})
@@ -56,7 +59,7 @@
  ::logout
  (fn [{:keys [db]} [_ user]]
    {:fx [[:http-xhrio {:method :post
-                       :uri "/api/logout"
+                       :uri (api-uri "logout")
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})}]]}))
 
@@ -64,7 +67,7 @@
  ::private-request
  (fn [{:keys [db]} [_]]
    {:fx [[:http-xhrio {:method :post
-                       :uri "/api/private-request"
+                       :uri (api-uri "private-request")
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})}]]}))
 
@@ -72,11 +75,12 @@
  ::refresh-token
  (fn [{:keys [db]} [_]]
    {:fx [[:http-xhrio {:method :post
-                       :uri "/api/refresh-token"
+                       :uri (api-uri "refresh-token")
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})}]]}))
 
 (defn home-page []
+  (js/console.log js/window)
   [:<>
    [:input
     {:on-change #(swap! state assoc :email (.. % -target -value))}]
