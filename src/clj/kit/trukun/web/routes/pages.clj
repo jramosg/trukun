@@ -1,11 +1,12 @@
 (ns kit.trukun.web.routes.pages
   (:require
+   [integrant.core :as ig]
    [kit.trukun.web.middleware.exception :as exception]
    [kit.trukun.web.pages.layout :as layout]
-   [integrant.core :as ig]
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
-   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]))
+   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
+   [ring.util.http-response :refer [ok]]))
 
 (defn wrap-page-defaults []
   (let [error-page (layout/error-page
@@ -18,7 +19,7 @@
 
 ;; Routes
 (defn page-routes [_opts]
-  [["/" {:get home}]])
+  [#_["/" {:get (fn [_] (ok {}))}]])
 
 (def route-data
   {:middleware

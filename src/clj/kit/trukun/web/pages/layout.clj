@@ -18,6 +18,13 @@
   (when (= :dev env) (parser/cache-off!))
   (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field))))
 
+(defn add-anti-forgery-token [resp]
+  (response/set-cookie resp "x-csrf-token"
+                       *anti-forgery-token*
+                       {:http-only true
+                        :secure true
+                        :same-site :strict}))
+
 (defn render
   [request template & [params]]
   (log/info "render home" {:api-url (:trukun/api-url @system)})
@@ -43,11 +50,7 @@
       str
       (ok)
       (content-type "text/html; charset=utf-8")
-      (response/set-cookie "x-csrf-token"
-                           *anti-forgery-token*
-                           {:http-only true
-                            :secure true
-                            :same-site :strict})))
+      (add-anti-forgery-token)))
 
 (defn error-page
   "error-details should be a map containing the following keys:

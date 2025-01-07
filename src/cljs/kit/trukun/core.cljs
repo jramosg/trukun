@@ -79,6 +79,14 @@
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})}]]}))
 
+(rf/reg-event-fx
+ ::anti-forgery-token
+ (fn [_ [_]]
+   {:fx [[:http-xhrio {:method :get
+                       :uri (api-uri "anti-forgery-token")
+                       :format (ajax/json-request-format)
+                       :response-format (ajax/json-response-format {:keywords? true})}]]}))
+
 (defn home-page []
   (js/console.log js/window)
   [:<>
@@ -118,6 +126,7 @@
 ;; Initialize app
 
 (defn ^:dev/after-load mount-root []
+  (rf/dispatch [::anti-forgery-token])
   (d/render [home-page] (.getElementById js/document "app")))
 
 (defn ^:export ^:dev/once init! []

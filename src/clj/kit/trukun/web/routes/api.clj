@@ -9,6 +9,7 @@
    [kit.trukun.web.middleware.exception :as exception]
    [kit.trukun.web.middleware.formats :as formats]
    [kit.trukun.web.middleware.log :refer [wrap-log]]
+   [kit.trukun.web.pages.layout :refer [add-anti-forgery-token]]
    [reitit.coercion.malli :as malli]
    [reitit.ring.coercion :as coercion]
    [reitit.ring.middleware.muuntaja :as muuntaja]
@@ -58,28 +59,43 @@
 ;; Routes
 (defn api-routes [_opts]
   [["/health"
-    {:get health/healthcheck!}]
+    {:get {:description "Checks the health of the API"
+           :handler health/healthcheck!}}]
+   ["/anti-forgery-token"
+    {:no-doc true
+     :get {:description "Generates and returns an anti-forgery token"
+           :handler (fn [_] (-> (ok {:success? true})
+                                add-anti-forgery-token))}}]
+   ["/swagger.json"
+    {:get {:no-doc true
+           :description "Returns the Swagger specification for the API"
+           :handler (swagger/create-swagger-handler)}}]
    ["" {:middleware [auth.middleware/csrf-protection-middleware
                      auth.middleware/wrap-authentication]}
     ["/logout"
-     {:post {:handler auth/logout}}]
-    ["/private-request" {:post {:handler (fn [_] (ok {}))}}]]
+     {:post {:description "Logs out the current user"
+             :handler auth/logout}}]
+    ["/private-request"
+     {:post {:description "Handles a private request (authentication required)"
+             :handler (fn [_] (ok {}))}}]]
    ["" {:middleware auth.middleware/csrf-protection-middleware}
-    ["/user" {:post {:handler create-user/create-user
-                     :parameters {:body [:map
-                                         [:email string?]
-                                         [:password string?]]}}}]
+    ["/user"
+     {:post {:description "Creates a new user by providing email and password"
+             :handler create-user/create-user
+             :parameters {:body [:map
+                                 [:email string?]
+                                 [:password string?]]}}}]
     ["/login"
-     {:post {:handler auth/login
+     {:post {:description "Logs in the user using email and password"
+             :handler auth/login
              :parameters {:body [:map
                                  [:email string?]
                                  [:password string?]]}}}]
     ["/refresh-token"
-     {:post {:handler auth/refresh-token}}]]
-   ["/swagger.json"
-    {:get {:no-doc  true
-           :swagger {:info {:title "kit.trukun API"}}
-           :handler (swagger/create-swagger-handler)}}]])
+     {:post {:no-doc true
+             :description "Refreshes the authentication token"
+             :handler auth/refresh-token}}]]])
+
 
 (derive :reitit.routes/api :reitit/routes)
 
