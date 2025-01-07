@@ -22,7 +22,7 @@
   (response/set-cookie resp "x-csrf-token"
                        *anti-forgery-token*
                        {:http-only false
-                        :secure true
+                        :secure false
                         :same-site :none}))
 
 (defn render
