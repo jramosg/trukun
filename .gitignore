@@ -3,8 +3,8 @@ kit.git-config.edn
 .nrepl-port
 hs_err_pid*.log
 .cpcache/
-target
 !target/trukun-standalone.jar
+target/classes
 log/
 .shadow-cljs/
 node_modules/
