@@ -14,7 +14,7 @@
    token
    (merge {:http-only true
            :secure true
-           :same-site :strict}
+           :same-site :none}
           opts)))
 
 (defn- set-auth-token [resp user & [{:keys [token] :as opts}]]

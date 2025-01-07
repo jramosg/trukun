@@ -23,7 +23,7 @@
                        *anti-forgery-token*
                        {:http-only true
                         :secure true
-                        :same-site :strict}))
+                        :same-site :none}))
 
 (defn render
   [request template & [params]]
