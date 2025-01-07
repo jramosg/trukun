@@ -5,6 +5,7 @@
    [kit.trukun.features.auth.middleware :as auth.middleware]
    [kit.trukun.web.controllers.create-user :as create-user]
    [kit.trukun.web.controllers.health :as health]
+   [kit.trukun.web.middleware.cors :refer [wrap-cors]]
    [kit.trukun.web.middleware.exception :as exception]
    [kit.trukun.web.middleware.formats :as formats]
    [kit.trukun.web.middleware.log :refer [wrap-log]]
@@ -36,6 +37,7 @@
    :muuntaja   formats/instance
    :swagger    {:id ::api}
    :middleware [wrap-log
+                wrap-cors
    ;; query-params & form-params
                 parameters/parameters-middleware
                   ;; content-negotiation
