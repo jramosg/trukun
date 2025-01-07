@@ -1,16 +1,18 @@
 (ns kit.trukun.core
-  (:require
-   [reagent.core :as r]
-   [reagent.dom :as d]
+  (:require 
    [day8.re-frame.http-fx]
    [ajax.core :as ajax]
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   [uix.core :refer [defui $]]
+   [uix.dom]
+   ["@ionic/react" :refer [IonToggle]]
+   ))
 
 ;; -------------------------
 ;; Views
 
-(def state (r/atom {}))
-(def login (r/atom {}))
+(def state (atom {}))
+(def login (atom {}))
 
 (defn- api-uri [s]
   (str js/window.trukun.API_URL s))
@@ -87,47 +89,19 @@
                        :format (ajax/json-request-format)
                        :response-format (ajax/json-response-format {:keywords? true})}]]}))
 
-(defn home-page []
-  (js/console.log js/window)
-  [:<>
-   [:input
-    {:on-change #(swap! state assoc :email (.. % -target -value))}]
-   [:input {:on-change #(swap! state assoc :password (.. % -target -value))
-            :type "password"}]
-   [:button {:on-click #(rf/dispatch [::create-user @state])} "SORTU"]
-   [:br]
-   [:br]
-   [:div (str @(rf/subscribe [::create-result]))]
-   [:br]
-   [:br]
-   [:input
-    {:on-change #(swap! login assoc :email (.. % -target -value))}]
-   [:input {:on-change #(swap! login assoc :password (.. % -target -value))
-            :type "password"}]
-   [:button {:on-click #(rf/dispatch [::login @login])}
-    "LOGIN"]
-   [:br]
-   [:br]
-   [:div (str @(rf/subscribe [::login-result]))]
-   [:br]
-   [:br]
-   [:button {:on-click #(rf/dispatch [::logout @login])}
-    "LOGOUT"]
-   [:br]
-   [:br]
-   [:button {:on-click #(rf/dispatch [::private-request])}
-    "PRIV request"]
-   [:br]
-   [:br]
-   [:button {:on-click #(rf/dispatch [::refresh-token])}
-    "refresh token"]])
+(defui button [{:keys [on-click children]}]
+  ($ :button.btn {:on-click on-click}
+     children))
 
-;; -------------------------
-;; Initialize app
+(defui app []
+  (let [[state set-state!] (uix.core/use-state 0)]
+    ($ :<>
+       ($ button {:on-click #(set-state! dec)} "-")
+       ($ :span state)
+       ($ button {:on-click #(set-state! inc)} "+"))))
 
-(defn ^:dev/after-load mount-root []
-  (rf/dispatch [::anti-forgery-token])
-  (d/render [home-page] (.getElementById js/document "app")))
+(defonce root
+  (uix.dom/create-root (js/document.getElementById "app")))
 
-(defn ^:export ^:dev/once init! []
-  (mount-root))
+(defn init! []
+  (uix.dom/render-root ($ app IonToggle) root))
