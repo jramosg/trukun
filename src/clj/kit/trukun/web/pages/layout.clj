@@ -35,11 +35,13 @@
          [:meta {:charset "UTF-8"}]
          [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
          [:meta {:name "description" :content "todo: describe app here"}]
-         (h/raw (format "<script type=\"text/javascript\">
-                       window.trukun = window.trukun || {}; 
-                       window.trukun.API_URL = '%s';
-                     </script>"
-                        (:trukun/api-url @system)))]
+         (h/raw "<script type= \"text/javascript\" >
+                window.trukun = window.trukun || {};
+                window.trukun.API_URL =
+                // 'http://localhost:3000/api/'
+                'https://www.trukun.com/api/'
+                // ;
+                </script>")]
         [:title "Ongi etorri Trukun aplikaziora"]
         [:link {:href "/css/screen.css" :rel "stylesheet" :type "text/css"}]
         [:body
@@ -51,6 +53,36 @@
       (ok)
       (content-type "text/html; charset=utf-8")
       (add-anti-forgery-token)))
+
+(comment
+  ;; = = - Example 1 = 
+  
+  user=> (= 1)
+  true
+  user=> (= 1 1)
+  true
+  user=> (= 1 2)
+  false
+  user=> (= 1 1 1)
+  true
+  user=> (= 1 1 2)
+  false
+  user=> (= '(1 2) [1 2])
+  true
+  user=> (= nil nil)
+  true
+  user=> (= (sorted-set 2 1) (sorted-set 1 2))
+  true
+  
+  ;; It should be noted that equality is not defined for Java arrays.
+  ;; Instead you can convert them into sequences and compare them that way.
+  ;; (= (seq array1) (seq array2))
+  
+  ;; See also:
+  clojure.core/==
+  clojure.core/not=
+  clojure.core/identical?
+  :rcf)
 
 (defn error-page
   "error-details should be a map containing the following keys:
