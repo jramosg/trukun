@@ -43,7 +43,7 @@
            :basis basis}))
 
 (defn all [_]
-  (do (clean nil) (prep nil) (uber nil)))
+  (do (clean nil) (prep nil) (uber nil))) 
 
 (comment 
   (load-file "build.clj"))
