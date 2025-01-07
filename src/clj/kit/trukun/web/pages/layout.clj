@@ -21,7 +21,7 @@
 (defn add-anti-forgery-token [resp]
   (response/set-cookie resp "x-csrf-token"
                        *anti-forgery-token*
-                       {:http-only true
+                       {:http-only false
                         :secure true
                         :same-site :none}))
 
