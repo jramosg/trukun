@@ -9,7 +9,8 @@
    (let [{:keys [exit], :as s} (shell "npm run build")]
      (when-not (zero? exit)
        (throw (ex-info "could not build with npm run build" s)))
-     (copy-tree "src/js/dist" "target/classes/public")))
+     (copy-tree "src/js/dist" "target/classes/public")
+     (shell "cp src/js/dist/index.html resources/html")))
 
 (def lib 'kit/trukun)
 (def main-cls (string/join "." (filter some? [(namespace lib) (name lib) "core"])))

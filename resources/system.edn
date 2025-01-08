@@ -20,9 +20,9 @@
                          :cookies true
                          :session {:flash true
                                    :cookie-name "kit.trukun"
-                                   :cookie-attrs {:max-age -1
-                                                  :http-only true
-                                                  :same-site :none}}
+                                   :cookie-attrs {:max-age     86400
+                                                  :http-only   true
+                                                  :same-site   :none}}
                          :security {:anti-forgery false
                                     :xss-protection {:enable? true,
                                                      :mode :block}

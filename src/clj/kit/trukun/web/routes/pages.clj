@@ -15,7 +15,7 @@
     #(wrap-anti-forgery % {:error-response error-page})))
 
 (defn home [request]
-  (layout/render request "/index.html"))
+  (layout/render request "index.html"))
 
 ;; Routes
 (defn page-routes [_opts]

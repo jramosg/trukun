@@ -13,6 +13,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import config from "../config.json";
 
+
 const POST_USER_REQUEST = "POST_USER_REQUEST";
 const POST_USER_SUCCESS = "POST_USER_SUCCESS";
 const POST_USER_FAILURE = "POST_USER_FAILURE";
@@ -25,7 +26,10 @@ const postUser: any =
       const response = await axios.post(
         `${config.API_BASE_URL}user`,
         formData,
-        options
+        {
+          ...options,
+          withCredentials: true, // Add credentials support here
+        }
       );
       dispatch({
         type: POST_USER_SUCCESS,
