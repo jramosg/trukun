@@ -17,16 +17,15 @@ const POST_USER_REQUEST = "POST_USER_REQUEST";
 const POST_USER_SUCCESS = "POST_USER_SUCCESS";
 const POST_USER_FAILURE = "POST_USER_FAILURE";
 const postUser: any =
-  (formData: { email: string; password: string }) => async (dispatch: any) => {
+  (formData: { email: string; password: string }, options = {}) =>
+  async (dispatch: any) => {
     dispatch({ type: POST_USER_REQUEST });
 
     try {
       const response = await axios.post(
         `${config.API_BASE_URL}user`,
         formData,
-        {
-          withCredentials: true, // Include credentials with the request
-        }
+        options
       );
       dispatch({
         type: POST_USER_SUCCESS,
@@ -59,7 +58,7 @@ const Tab1: React.FC = () => {
     e.preventDefault();
     console.log("Email Submitted: ", formData.email);
     console.log("Password Submitted: ", formData.password);
-    dispatch(postUser(formData));
+    dispatch(postUser(formData, { headers: { "x-csrf-token": "aa" } }));
     // Add form submission logic here
   };
 

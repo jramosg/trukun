@@ -6,7 +6,7 @@
   (log/debug "wrap-cors")
   (ring.cors/wrap-cors
    handler
-  :access-control-allow-origin [#"http://localhost:8100"]
+  :access-control-allow-origin [#"http://localhost:8100" #"https://localhost" #"https://www.trukun.com"]
   :access-control-allow-credentials "true"
    :access-control-allow-methods [:get :post :put :delete :patch :options]
    :access-control-allow-headers ["Content-Type" "Authorization" "X-CSRF-Token"]))
