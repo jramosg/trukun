@@ -15,11 +15,11 @@
     #(wrap-anti-forgery % {:error-response error-page})))
 
 (defn home [request]
-  #_(layout/render request "home.html"))
+  (layout/render request "/index.html"))
 
 ;; Routes
 (defn page-routes [_opts]
-  [#_["/" {:get home}]])
+  [["/" {:get home}]])
 
 (def route-data
   {:middleware

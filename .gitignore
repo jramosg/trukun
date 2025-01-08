@@ -22,3 +22,4 @@ modules/
 
 resources/.secrets.edn
 .env
+src/js/dist/

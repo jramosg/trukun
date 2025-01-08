@@ -37,9 +37,10 @@
 
   (create-auth-token {:id "1" :name "aa"})
 
-  (defn generate-secret-key []
-    (let [random-bytes (byte-array 32)] ; 256-bit key
+  (defn generate-secret-key [& [bytes]]
+    (let [random-bytes (byte-array (or bytes 32))] ; 256-bit key
       (.nextBytes (java.security.SecureRandom.) random-bytes)
       (.encodeToString (java.util.Base64/getEncoder) random-bytes)))
 
-  (generate-secret-key))
+
+  (generate-secret-key 12))

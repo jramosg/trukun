@@ -1,5 +1,6 @@
 (ns kit.trukun.web.routes.api
   (:require
+   [clojure.tools.logging :as log]
    [integrant.core :as ig]
    [kit.trukun.features.auth.controllers :as auth]
    [kit.trukun.features.auth.middleware :as auth.middleware]
@@ -15,6 +16,7 @@
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
    [reitit.swagger :as swagger]
+   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
    [ring.util.http-response :refer [ok]]))
 
 (def email-spec
@@ -54,7 +56,8 @@
                   ;; coercing request parameters
                 coercion/coerce-request-middleware
                   ;; exception handling
-                exception/wrap-exception]})
+                exception/wrap-exception
+                wrap-anti-forgery]})
 
 ;; Routes
 (defn api-routes [_opts]
@@ -64,8 +67,9 @@
    ["/anti-forgery-token"
     {:no-doc true
      :get {:description "Generates and returns an anti-forgery token"
-           :handler (fn [_] (-> (ok {:success? true})
-                                add-anti-forgery-token))}}]
+           :handler (fn [_] (log/debug "barrun")
+                      (-> (ok {:ok "Ok"})
+                          add-anti-forgery-token))}}]
    ["/swagger.json"
     {:get {:no-doc true
            :description "Returns the Swagger specification for the API"

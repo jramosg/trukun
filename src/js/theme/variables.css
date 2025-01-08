@@ -1,0 +1,45 @@
+/* For information on how to create your own theme, please see:
+http://ionicframework.com/docs/theming/ */
+:root {
+  /* Padding and Spacing */
+  --ion-padding: 16px;
+  --ion-padding-horizontal: 16px;
+  --ion-padding-vertical: 12px;
+  --ion-margin: 16px;
+  --ion-margin-horizontal: 16px;
+  --ion-margin-vertical: 12px;
+
+  /* Border */
+  --ion-border-radius: 8px;
+  --ion-border-width: 1px;
+  --ion-border-color: var(--ion-color-medium);
+
+  /* Typography */
+  --ion-font-family: "Roboto", sans-serif;
+  --ion-font-size-base: 16px;
+  --ion-font-size-large: 18px;
+  --ion-font-size-small: 14px;
+  --ion-line-height-base: 1.5;
+  --ion-line-height-large: 1.6;
+  --ion-line-height-small: 1.4;
+
+  /* Button */
+  --ion-button-radius: var(--ion-border-radius);
+  --ion-button-padding: var(--ion-padding-vertical)
+    var(--ion-padding-horizontal);
+  --ion-button-font-size: var(--ion-font-size-base);
+  --ion-button-background: var(--ion-color-primary);
+  --ion-button-color: var(--ion-text-color-light);
+
+  /* Input */
+  --ion-input-border-color: var(--ion-color-medium);
+  --ion-input-border-radius: var(--ion-border-radius);
+  --ion-input-padding: var(--ion-padding-vertical) var(--ion-padding-horizontal);
+
+  /* Misc */
+  --ion-content-background: var(--ion-color-light);
+  --ion-list-background: var(--ion-color-light);
+  --ion-card-background: var(--ion-color-light);
+  --ion-header-background: var(--ion-color-primary);
+  --ion-footer-background: var(--ion-color-dark);
+}
