@@ -13,13 +13,12 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import config from "../config.json";
 
-
 const POST_USER_REQUEST = "POST_USER_REQUEST";
 const POST_USER_SUCCESS = "POST_USER_SUCCESS";
 const POST_USER_FAILURE = "POST_USER_FAILURE";
+
 const postUser: any =
-  (formData: { email: string; password: string }, options = {}) =>
-  async (dispatch: any) => {
+  (formData: { email: string; password: string }) => async (dispatch: any) => {
     dispatch({ type: POST_USER_REQUEST });
 
     try {
@@ -27,8 +26,7 @@ const postUser: any =
         `${config.API_BASE_URL}user`,
         formData,
         {
-          ...options,
-          withCredentials: true, // Add credentials support here
+          withCredentials: true, // Correctly add withCredentials in the config object
         }
       );
       dispatch({
@@ -62,8 +60,7 @@ const Tab1: React.FC = () => {
     e.preventDefault();
     console.log("Email Submitted: ", formData.email);
     console.log("Password Submitted: ", formData.password);
-    dispatch(postUser(formData, { headers: { "x-csrf-token": "aa" } }));
-    // Add form submission logic here
+    dispatch(postUser(formData)); // Dispatch the action
   };
 
   return (

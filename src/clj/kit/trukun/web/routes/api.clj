@@ -2,21 +2,20 @@
   (:require
    [clojure.tools.logging :as log]
    [integrant.core :as ig]
-   [kit.trukun.features.auth.controllers :as auth]
+   [kit.trukun.features.auth.controllers :as auth :refer [set-cookie]]
    [kit.trukun.features.auth.middleware :as auth.middleware]
+   [kit.trukun.features.auth.services :as auth.services]
    [kit.trukun.web.controllers.create-user :as create-user]
    [kit.trukun.web.controllers.health :as health]
    [kit.trukun.web.middleware.cors :refer [wrap-cors]]
    [kit.trukun.web.middleware.exception :as exception]
    [kit.trukun.web.middleware.formats :as formats]
    [kit.trukun.web.middleware.log :refer [wrap-log]]
-   [kit.trukun.web.pages.layout :refer [add-anti-forgery-token]]
    [reitit.coercion.malli :as malli]
    [reitit.ring.coercion :as coercion]
    [reitit.ring.middleware.muuntaja :as muuntaja]
    [reitit.ring.middleware.parameters :as parameters]
    [reitit.swagger :as swagger]
-   [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
    [ring.util.http-response :refer [ok]]))
 
 (def email-spec
@@ -56,25 +55,30 @@
                   ;; coercing request parameters
                 coercion/coerce-request-middleware
                   ;; exception handling
-                exception/wrap-exception
-                wrap-anti-forgery]})
+                exception/wrap-exception]})
+
 
 ;; Routes
 (defn api-routes [_opts]
   [["/health"
     {:get {:description "Checks the health of the API"
            :handler health/healthcheck!}}]
-   ["/anti-forgery-token"
+   ["/access-token"
     {:no-doc true
      :get {:description "Generates and returns an anti-forgery token"
            :handler (fn [_] (log/debug "barrun")
                       (-> (ok {:ok "Ok"})
-                          add-anti-forgery-token))}}]
+                          (set-cookie
+                           "access-token"
+                           (auth.services/create-auth-token {} {:access-token? true
+                                                                :exp auth.services/refresh-token-max-age})
+                           {:max-age auth.services/refresh-token-max-age
+                            :path "/api/"})))}}]
    ["/swagger.json"
     {:get {:no-doc true
            :description "Returns the Swagger specification for the API"
            :handler (swagger/create-swagger-handler)}}]
-   ["" {:middleware [auth.middleware/csrf-protection-middleware
+   ["" {:middleware [auth.middleware/access-token-middleware
                      auth.middleware/wrap-authentication]}
     ["/logout"
      {:post {:description "Logs out the current user"
@@ -82,7 +86,7 @@
     ["/private-request"
      {:post {:description "Handles a private request (authentication required)"
              :handler (fn [_] (ok {}))}}]]
-   ["" {:middleware auth.middleware/csrf-protection-middleware}
+   ["" {:middleware auth.middleware/access-token-middleware}
     ["/user"
      {:post {:description "Creates a new user by providing email and password"
              :handler create-user/create-user

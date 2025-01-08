@@ -7,7 +7,7 @@
    [kit.trukun.features.auth.services :as auth.services]
    [clojure.tools.logging :as log]))
 
-(defn- set-cookie [resp cookie-name token opts]
+(defn set-cookie [resp cookie-name token opts]
   (response/set-cookie
    resp
    cookie-name

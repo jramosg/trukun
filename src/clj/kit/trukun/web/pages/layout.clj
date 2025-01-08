@@ -18,24 +18,16 @@
   (when (= :dev env) (parser/cache-off!))
   (parser/add-tag! :csrf-field (fn [_ _] (anti-forgery-field))))
 
-(defn add-anti-forgery-token [resp]
-  (response/set-cookie resp "x-csrf-token"
-                       *anti-forgery-token*
-                       {:http-only "true"
-                        :path "/"
-                        :secure "true"
-                        :max-age 86400
-                        :same-site :none}))
-
 (defn render
   [_request template & [params]]
   (log/info "render home" {:api-url (:trukun/api-url @system)})
   (->  (parser/render-file template
-                           (assoc params :page template :csrf-token *anti-forgery-token*)
+                           (assoc params :page template
+                                 ; :csrf-token *anti-forgery-token*
+                                  )
                            selmer-opts)
        (ok)
-       (content-type "text/html; charset=utf-8")
-       (add-anti-forgery-token)))
+       (content-type "text/html; charset=utf-8")))
 
 (comment
   ;; = = - Example 1 = 

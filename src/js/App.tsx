@@ -56,8 +56,9 @@ const App: React.FC = () => {
     const fetchAntiForgeryToken = async () => {
       try {
         const response = await axios.get(
-          config.API_BASE_URL + "anti-forgery-token",
+          config.API_BASE_URL + "access-token",
           {
+            withCredentials: true, // Ensure cookies are included
           }
         );
       } catch (error) {
