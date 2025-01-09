@@ -13,6 +13,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import config from "../config.json";
 import { useAddUserMutation } from "../api/endpoints/users";
+import Header from "../components/header";
 
 const POST_USER_REQUEST = "POST_USER_REQUEST";
 const POST_USER_SUCCESS = "POST_USER_SUCCESS";
@@ -103,11 +104,7 @@ const Tab1: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <Header title="Tab 1" />
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
