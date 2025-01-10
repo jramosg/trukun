@@ -19,7 +19,8 @@
 
 ;; Routes
 (defn page-routes [_opts]
-  [["/" {:get home}]])
+  [["/" {:get home}]
+   ["/:page" {:get home}]])
 
 (def route-data
   {:middleware
