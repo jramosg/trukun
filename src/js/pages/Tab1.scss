@@ -1,6 +1,6 @@
 form {
   max-width: 200px;
   > * {
-    margin: calc(var(--ion-margin) / 2);
+    margin: var(--s2);
   }
 }

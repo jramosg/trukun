@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import "./Tab1.scss";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import config from "../config.json";
+import config from "../config/config.json";
 import { useAddUserMutation } from "../api/endpoints/users";
 import Header from "../components/header";
 

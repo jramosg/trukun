@@ -1,0 +1,9 @@
+.leaflet-container {
+        height: 300px;
+    }
+
+/* Ensure the Leaflet map takes full width and height */
+.map-container {
+  height: 100%;
+  width: 100%;
+}
