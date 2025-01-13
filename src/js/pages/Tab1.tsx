@@ -7,7 +7,7 @@ import {
   IonInput,
   IonButton,
 } from '@ionic/react'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import './Tab1.scss'
 import axios from 'axios'
 import config from '../config/config.json'
@@ -49,12 +49,15 @@ const Tab1: React.FC = () => {
     password: '',
   })
 
-  const handleInputChange = (e: CustomEvent, name: string) => {
-    setFormData((prevState) => ({
-      ...prevState, // Copy previous state
-      [name]: e.detail.value, // Update the specific field (email or password)
-    }))
-  }
+  const handleInputChange = useCallback(
+    (e: CustomEvent, name: string) => {
+      setFormData((prevState) => ({
+        ...prevState, // Copy previous state
+        [name]: e.detail.value, // Update the specific field (email or password)
+      }))
+    },
+    [], // No dependencies needed
+  )
 
   const [addUser, { data: addedUser, isLoading, isSuccess, isError, error }] =
     useAddUserMutation()
@@ -74,12 +77,15 @@ const Tab1: React.FC = () => {
     }
   }, [isSuccess])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log('Email Submitted: ', newUser.email)
-    console.log('Password Submitted: ', newUser.password)
-    addUser(newUser)
-  }
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault()
+      console.log('Email Submitted: ', newUser.email)
+      console.log('Password Submitted: ', newUser.password)
+      addUser(newUser)
+    },
+    [newUser, addUser],
+  )
   let content: React.ReactNode
 
   if (isLoading) {

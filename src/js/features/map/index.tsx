@@ -103,10 +103,10 @@ const Map: React.FC = () => {
       <IonContent>
         <Header title="Arrasate" />
         <MapContainer
-          attributionControl={true}
+          attributionControl
           center={center}
           minZoom={3}
-          scrollWheelZoom={true}
+          scrollWheelZoom
           style={{
             height: '100%',
             width: '100%',
