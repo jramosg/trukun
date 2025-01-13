@@ -1,9 +1,9 @@
 export interface NewUser {
-  password: string;
-  email: string;
+  password: string
+  email: string
 }
 
 export interface User {
-    id: string;
-    email: string;
+  id: string
+  email: string
 }

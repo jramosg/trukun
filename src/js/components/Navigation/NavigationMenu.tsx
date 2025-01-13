@@ -8,14 +8,14 @@ import {
   IonMenu,
   IonMenuToggle,
   IonNote,
-} from "@ionic/react";
+} from '@ionic/react'
 
-import { useLocation } from "react-router-dom";
-import "./NavigationMenu.css";
-import { appPages } from "../../config/AppPages";
+import { useLocation } from 'react-router-dom'
+import './NavigationMenu.css'
+import { appPages } from '../../config/AppPages'
 
 const NavigationMenu: React.FC = () => {
-  const location = useLocation();
+  const location = useLocation()
 
   return (
     <IonMenu contentId="main" type="overlay">
@@ -28,7 +28,7 @@ const NavigationMenu: React.FC = () => {
               <IonMenuToggle autoHide={false} key={index}>
                 <IonItem
                   className={
-                    location.pathname === appPage.url ? "selected" : ""
+                    location.pathname === appPage.url ? 'selected' : ''
                   }
                   detail={false}
                   lines="none"
@@ -44,12 +44,12 @@ const NavigationMenu: React.FC = () => {
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>
               </IonMenuToggle>
-            );
+            )
           })}
         </IonList>
       </IonContent>
     </IonMenu>
-  );
-};
+  )
+}
 
-export default NavigationMenu;
+export default NavigationMenu

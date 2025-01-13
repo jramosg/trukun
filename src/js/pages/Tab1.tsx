@@ -6,21 +6,21 @@ import {
   IonToolbar,
   IonInput,
   IonButton,
-} from "@ionic/react";
-import { useEffect, useState } from "react";
-import "./Tab1.scss";
-import axios from "axios";
-import config from "../config/config.json";
-import { useAddUserMutation } from "../api/endpoints/users";
-import Header from "../components/header";
+} from '@ionic/react'
+import { useEffect, useState } from 'react'
+import './Tab1.scss'
+import axios from 'axios'
+import config from '../config/config.json'
+import { useAddUserMutation } from '../api/endpoints/users'
+import Header from '../components/header'
 
-const POST_USER_REQUEST = "POST_USER_REQUEST";
-const POST_USER_SUCCESS = "POST_USER_SUCCESS";
-const POST_USER_FAILURE = "POST_USER_FAILURE";
+const POST_USER_REQUEST = 'POST_USER_REQUEST'
+const POST_USER_SUCCESS = 'POST_USER_SUCCESS'
+const POST_USER_FAILURE = 'POST_USER_FAILURE'
 
 const postUser: any =
   (formData: { email: string; password: string }) => async (dispatch: any) => {
-    dispatch({ type: POST_USER_REQUEST });
+    dispatch({ type: POST_USER_REQUEST })
 
     try {
       const response = await axios.post(
@@ -28,38 +28,38 @@ const postUser: any =
         formData,
         {
           withCredentials: true, // Correctly add withCredentials in the config object
-        }
-      );
+        },
+      )
       dispatch({
         type: POST_USER_SUCCESS,
         payload: response.data,
-      });
+      })
     } catch (error: any) {
       dispatch({
         type: POST_USER_FAILURE,
-        payload: error.message || "Something went wrong",
-      });
+        payload: error.message || 'Something went wrong',
+      })
     }
-  };
+  }
 
 const Tab1: React.FC = () => {
   // Initialize state as an object with email and password properties
   const [newUser, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+    email: '',
+    password: '',
+  })
 
   const handleInputChange = (e: CustomEvent, name: string) => {
     setFormData((prevState) => ({
       ...prevState, // Copy previous state
       [name]: e.detail.value, // Update the specific field (email or password)
-    }));
-  };
+    }))
+  }
 
   const [addUser, { data: addedUser, isLoading, isSuccess, isError, error }] =
-    useAddUserMutation();
+    useAddUserMutation()
 
-/*   const handleAddUser = async () => {
+  /*   const handleAddUser = async () => {
     try {
       await addUser(newUser).unwrap(); // .unwrap() allows explicit error handling
       alert("User added successfully!");
@@ -70,36 +70,35 @@ const Tab1: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      alert("User created successfully!");
+      alert('User created successfully!')
     }
-  }, [isSuccess]);
+  }, [isSuccess])
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Email Submitted: ", newUser.email);
-    console.log("Password Submitted: ", newUser.password);
-    addUser(newUser);
-  };
-  let content: React.ReactNode;
+    e.preventDefault()
+    console.log('Email Submitted: ', newUser.email)
+    console.log('Password Submitted: ', newUser.password)
+    addUser(newUser)
+  }
+  let content: React.ReactNode
 
   if (isLoading) {
-    content = <div>loading..</div>;
+    content = <div>loading..</div>
   } else if (isSuccess) {
     content = (
       <div>
         <p>User created successfully!</p>
         <pre>{JSON.stringify(addedUser, null, 2)}</pre>
       </div>
-    );
+    )
   } else if (isError) {
     content = (
       <div>
         <p>Error creating user</p>
         <pre>{JSON.stringify(error, null, 2)}</pre>
       </div>
-    );
+    )
   }
-
 
   return (
     <IonPage>
@@ -114,8 +113,8 @@ const Tab1: React.FC = () => {
           alt=""
           src="/img/kit.png"
           style={{
-            height: "200px",
-            width: "200px",
+            height: '200px',
+            width: '200px',
           }}
         />
 
@@ -124,7 +123,7 @@ const Tab1: React.FC = () => {
             fill="solid"
             labelPlacement="floating"
             name="email" // Set the input name for email
-            onIonInput={(e) => handleInputChange(e, "email")}
+            onIonInput={(e) => handleInputChange(e, 'email')}
             type="email"
             value={newUser.email} // Bind email state to the input
           >
@@ -134,7 +133,7 @@ const Tab1: React.FC = () => {
             fill="solid"
             labelPlacement="floating"
             name="password" // Set the input name for password
-            onIonInput={(e) => handleInputChange(e, "password")}
+            onIonInput={(e) => handleInputChange(e, 'password')}
             type="password"
             value={newUser.password} // Bind password state to the input
           >
@@ -145,7 +144,7 @@ const Tab1: React.FC = () => {
         {content}
       </IonContent>
     </IonPage>
-  );
-};
+  )
+}
 
-export default Tab1;
+export default Tab1

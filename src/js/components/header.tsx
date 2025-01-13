@@ -1,8 +1,8 @@
-import React from "react";
-import { IonHeader, IonToolbar, IonTitle } from "@ionic/react";
+import React from 'react'
+import { IonHeader, IonToolbar, IonTitle } from '@ionic/react'
 
 interface TabHeaderProps {
-  title: string;
+  title: string
 }
 
 const TabHeader: React.FC<TabHeaderProps> = ({ title }) => {
@@ -12,7 +12,7 @@ const TabHeader: React.FC<TabHeaderProps> = ({ title }) => {
         <IonTitle>{title}</IonTitle>
       </IonToolbar>
     </IonHeader>
-  );
-};
+  )
+}
 
-export default TabHeader;
+export default TabHeader
