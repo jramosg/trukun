@@ -1,40 +1,58 @@
-# trukun
+# Trukun
 
-Start a [REPL](#repls) in your editor or terminal of choice.
+## Overview
 
-Start the server with:
+Trukun is a modern application designed with a robust server-client architecture. This README provides instructions for setting up and running the server and client components, as well as generating the application JAR file.
+
+## Server
+
+### Starting the Server
+
+To start the server, ensure you have a running REPL in your editor or terminal. Then, execute the following commands:
 
 ```clojure
 (go)
 ```
 
-The default API is available under http://localhost:3000/api
+Once started, the API will be available at: `http://localhost:3000/api`
 
-System configuration is available under `resources/system.edn`.
+#### Configuration
 
-To reload changes:
+The system configuration for the server is located in the resources/system.edn file. Ensure the configuration is properly set up before running the server.
 
-```clojure
+#### Reloading Changes
+
+To reload changes without restarting the server, use:
+
 (reset)
+
+## Client
+
+Before running the client, install dependencies using:
+
+```bash
+pnpm i
+```
+To initialize and run the client, use the following command:
+
+```bash
+ionic serve
+```
+Ensure the client is connected to the server for seamless operation.
+
+## Building the Application JAR
+
+To generate a JAR file for the application, use the following command:
+
+```bash
+clj -Sforce -T:build all
 ```
 
-## REPLs
+This will produce a deployable JAR file, ready for production use.
 
-### Cursive
+## Additional Notes
 
-Configure a [REPL following the Cursive documentation](https://cursive-ide.com/userguide/repl.html). Using the default "Run with IntelliJ project classpath" option will let you select an alias from the ["Clojure deps" aliases selection](https://cursive-ide.com/userguide/deps.html#refreshing-deps-dependencies).
+Make sure all dependencies are installed and up-to-date.
 
-### CIDER
+Use the appropriate environment variables for production and development environments.
 
-Use the `cider` alias for CIDER nREPL support (run `clj -M:dev:cider`). See the [CIDER docs](https://docs.cider.mx/cider/basics/up_and_running.html) for more help.
-
-Note that this alias runs nREPL during development. To run nREPL in production (typically when the system starts), use the kit-nrepl library through the +nrepl profile as described in [the documentation](https://kit-clj.github.io/docs/profiles.html#profiles).
-
-### Command Line
-
-Run `clj -M:dev:nrepl` or `make repl`.
-
-Note that, just like with [CIDER](#cider), this alias runs nREPL during development. To run nREPL in production (typically when the system starts), use the kit-nrepl library through the +nrepl profile as described in [the documentation](https://kit-clj.github.io/docs/profiles.html#profiles).
-
-# Generating jar
-clj -Sforce -T:build all
