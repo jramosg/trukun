@@ -7,7 +7,7 @@ const NavigationTabs: React.FC = () => {
     <IonTabBar slot="bottom">
       {appPages.map((appPage, index) => {
         return (
-          <IonTabButton key={index} tab={appPage.id} href={appPage.url}>
+          <IonTabButton href={appPage.url} key={index} tab={appPage.id}>
             <IonIcon
               aria-hidden="true"
               ios={appPage.iosIcon}

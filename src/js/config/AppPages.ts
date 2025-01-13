@@ -1,6 +1,4 @@
 import {
-  archiveOutline,
-  archiveSharp,
   heartOutline,
   heartSharp,
   mailOutline,

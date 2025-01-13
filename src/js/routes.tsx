@@ -7,7 +7,6 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { ellipse, square, triangle, locate } from "ionicons/icons";
 import Tab1 from "./pages/Tab1";
 import Tab2 from "./pages/Tab2";
 import Tab3 from "./pages/Tab3";
@@ -51,7 +50,6 @@ import { appPages } from "./config/AppPages";
 
 setupIonicReact();
 
-
 export const Routes: React.FC = () => {
   const pageComponents: Record<string, React.FC> = {
     tab1: Tab1,
@@ -65,7 +63,7 @@ export const Routes: React.FC = () => {
       {appPages.map(({ url, id }) => {
         const PageComponent = pageComponents[id];
         return (
-          <Route exact path={url} key={id}>
+          <Route exact key={id} path={url}>
             <PageComponent />
           </Route>
         );
@@ -81,7 +79,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchAntiForgeryToken = async () => {
       try {
-        const response = await axios.get(config.API_BASE_URL + "access-token", {
+        await axios.get(config.API_BASE_URL + "access-token", {
           withCredentials: true, // Ensure cookies are included
         });
       } catch (error) {
@@ -98,14 +96,14 @@ const App: React.FC = () => {
         <IonSplitPane className="hidden-md-down" contentId="main">
           <SideBar />
           <IonRouterOutlet id="main">
-            <Routes></Routes>
+            <Routes/>
           </IonRouterOutlet>
         </IonSplitPane>
         <IonTabs className="hidden-md-up">
           <IonRouterOutlet>
-            <Routes></Routes>
+            <Routes/>
           </IonRouterOutlet>
-          <NavigationTabs></NavigationTabs>
+          <NavigationTabs/>
         </IonTabs>
       </IonReactRouter>
     </IonApp>

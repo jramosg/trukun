@@ -53,6 +53,8 @@
     "@vitejs/plugin-react": "^4.0.1",
     "cypress": "^13.5.0",
     "eslint": "^8.57.1",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-react": "^7.37.3",
     "globals": "^15.14.0",
     "jsdom": "^22.1.0",

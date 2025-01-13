@@ -25,7 +25,7 @@ import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import { useEffect, useState } from "react";
 
-let DefaultIcon = L.icon({
+const DefaultIcon = L.icon({
   iconUrl: icon,
   shadowUrl: iconShadow,
 });
@@ -101,17 +101,17 @@ const Map: React.FC = () => {
   return (
     <IonPage>
       <IonContent>
-        <Header title="Arrasate"></Header>
+        <Header title="Arrasate"/>
         <MapContainer
+          attributionControl={true}
+          center={center}
+          minZoom={3}
+          scrollWheelZoom={true}
           style={{
             height: "100%",
             width: "100%",
           }}
-          center={center}
-          attributionControl={true}
           zoom={14}
-          minZoom={3}
-          scrollWheelZoom={true}
         >
           <ComponentResize />
           <TileLayer

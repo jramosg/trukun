@@ -25,21 +25,21 @@ const NavigationMenu: React.FC = () => {
           <IonNote>Ongi etorri!</IonNote>
           {appPages.map((appPage, index) => {
             return (
-              <IonMenuToggle key={index} autoHide={false}>
+              <IonMenuToggle autoHide={false} key={index}>
                 <IonItem
                   className={
                     location.pathname === appPage.url ? "selected" : ""
                   }
-                  routerLink={appPage.url}
-                  routerDirection="none"
-                  lines="none"
                   detail={false}
+                  lines="none"
+                  routerDirection="none"
+                  routerLink={appPage.url}
                 >
                   <IonIcon
                     aria-hidden="true"
-                    slot="start"
                     ios={appPage.iosIcon}
                     md={appPage.mdIcon}
+                    slot="start"
                   />
                   <IonLabel>{appPage.title}</IonLabel>
                 </IonItem>

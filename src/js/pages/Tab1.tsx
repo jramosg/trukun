@@ -10,7 +10,6 @@ import {
 import { useEffect, useState } from "react";
 import "./Tab1.scss";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 import config from "../config/config.json";
 import { useAddUserMutation } from "../api/endpoints/users";
 import Header from "../components/header";
@@ -112,32 +111,32 @@ const Tab1: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <img
+          alt=""
+          src="/img/kit.png"
           style={{
             height: "200px",
             width: "200px",
           }}
-          src="/img/kit.png"
-          alt=""
         />
 
         <form className="ion-padding" onSubmit={handleSubmit}>
           <IonInput
-            labelPlacement="floating"
             fill="solid"
-            type="email"
+            labelPlacement="floating"
             name="email" // Set the input name for email
-            value={newUser.email} // Bind email state to the input
             onIonInput={(e) => handleInputChange(e, "email")}
+            type="email"
+            value={newUser.email} // Bind email state to the input
           >
             <div slot="label">Email</div> {/* Correct label placement */}
           </IonInput>
           <IonInput
-            labelPlacement="floating"
             fill="solid"
-            type="password"
+            labelPlacement="floating"
             name="password" // Set the input name for password
-            value={newUser.password} // Bind password state to the input
             onIonInput={(e) => handleInputChange(e, "password")}
+            type="password"
+            value={newUser.password} // Bind password state to the input
           >
             <div slot="label">Contraseña</div> {/* Correct label placement */}
           </IonInput>
