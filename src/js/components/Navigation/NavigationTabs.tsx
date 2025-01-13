@@ -1,6 +1,6 @@
 import React from "react";
 import { IonTabBar, IonTabButton, IonIcon, IonLabel } from "@ionic/react";
-import { appPages } from "../config/AppPages";
+import { appPages } from "../../config/AppPages";
 
 const NavigationTabs: React.FC = () => {
   return (

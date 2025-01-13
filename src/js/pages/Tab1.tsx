@@ -111,6 +111,15 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <img
+          style={{
+            height: "200px",
+            width: "200px",
+          }}
+          src="/img/kit.png"
+          alt=""
+        />
+
         <form className="ion-padding" onSubmit={handleSubmit}>
           <IonInput
             labelPlacement="floating"

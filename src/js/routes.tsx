@@ -1,21 +1,9 @@
 import { Redirect, Route } from "react-router-dom";
 import {
   IonApp,
-  IonContent,
-  IonHeader,
-  IonIcon,
-  IonItem,
-  IonLabel,
-  IonList,
-  IonMenu,
-  IonMenuToggle,
   IonRouterOutlet,
   IonSplitPane,
-  IonTabBar,
-  IonTabButton,
   IonTabs,
-  IonTitle,
-  IonToolbar,
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
@@ -57,37 +45,34 @@ import { useEffect } from "react";
 import axios from "axios";
 import config from "./config/config.json";
 import Map from "./features/map/index";
-import SideBar from "./components/NavigationMenu";
-import NavigationTabs from "./components/NavigationTabs";
+import SideBar from "./components/Navigation/NavigationMenu";
+import NavigationTabs from "./components/Navigation/NavigationTabs";
+import { appPages } from "./config/AppPages";
 
 setupIonicReact();
 
-const menuItems = [
-  { title: "Tab 1", url: "/tab1", icon: triangle },
-  { title: "Tab 2", url: "/tab2", icon: ellipse },
-  { title: "Tab 3", url: "/tab3", icon: square },
-  { title: "Mapa", url: "/mapa", icon: locate },
-];
 
-const Routes: React.FC = () => {
+export const Routes: React.FC = () => {
+  const pageComponents: Record<string, React.FC> = {
+    tab1: Tab1,
+    tab2: Tab2,
+    tab3: Tab3,
+    mapa: Map,
+  };
+
   return (
     <>
-      <Route exact path="/tab1">
-        <Tab1 />
-      </Route>
-      <Route exact path="/tab2">
-        <Tab2 />
-      </Route>
-      <Route path="/tab3">
-        <Tab3 />
-      </Route>
-      <Route exact path="/mapa">
-        <Map />
-      </Route>
+      {appPages.map(({ url, id }) => {
+        const PageComponent = pageComponents[id];
+        return (
+          <Route exact path={url} key={id}>
+            <PageComponent />
+          </Route>
+        );
+      })}
       <Route exact path="/">
         <Redirect to="/tab1" />
       </Route>
-      
     </>
   );
 };
@@ -113,7 +98,7 @@ const App: React.FC = () => {
         <IonSplitPane className="hidden-md-down" contentId="main">
           <SideBar />
           <IonRouterOutlet id="main">
-           <Routes></Routes>
+            <Routes></Routes>
           </IonRouterOutlet>
         </IonSplitPane>
         <IonTabs className="hidden-md-up">

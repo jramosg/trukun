@@ -1,4 +1,11 @@
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMap,
+  GeoJSON,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { IonContent, IonPage } from "@ionic/react";
@@ -16,6 +23,7 @@ const ComponentResize = () => {
 
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
+import { useEffect, useState } from "react";
 
 let DefaultIcon = L.icon({
   iconUrl: icon,
@@ -57,9 +65,39 @@ const positions: { [key: string]: Position } = {
   },
 };
 
+// Component to load and display a GeoJSON file
+interface LoadGeoJsonFileProps {
+  geoJsonFileUrl: string; // URL or path to the GeoJSON file
+}
+
+const LoadGeoJsonFile: React.FC<LoadGeoJsonFileProps> = ({
+  geoJsonFileUrl,
+}) => {
+  const [geoJsonData, setGeoJsonData] = useState<any>(null);
+
+  useEffect(() => {
+    const loadGeoJsonData = async () => {
+      try {
+        const response = await fetch(geoJsonFileUrl); // Removed mode: "no-cors"
+        const data = await response.json();
+        setGeoJsonData(data);
+      } catch (error) {
+        console.error("Error loading GeoJSON file:", error);
+      }
+    };
+
+    loadGeoJsonData();
+  }, [geoJsonFileUrl]);
+
+  if (!geoJsonData) {
+    return null; // Render nothing while data is loading
+  }
+
+  return <GeoJSON  data={geoJsonData} />;
+};
+
 const Map: React.FC = () => {
   const center: [number, number] = [43.0657589, -2.492529];
-
   return (
     <IonPage>
       <IonContent>
@@ -85,6 +123,7 @@ const Map: React.FC = () => {
               <Popup>{label}</Popup>
             </Marker>
           ))}
+          <LoadGeoJsonFile geoJsonFileUrl="/maps/udalaitz.geojson" />
         </MapContainer>
       </IonContent>
     </IonPage>

@@ -1,6 +1,6 @@
 // src/api/endpoints/users.ts
 import { NewUser, User } from "../../types/user";
-import api from "../api";
+import api from "../../lib/apiClient";
 
 const usersApi = api.injectEndpoints({
   endpoints: (build) => ({

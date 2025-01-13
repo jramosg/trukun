@@ -20,9 +20,7 @@
   [_request template & [params]]
   (log/info "render home" {:api-url (:trukun/api-url @system)})
   (->  (parser/render-file template
-                           (assoc params :page template
-                                 ; :csrf-token *anti-forgery-token*
-                                  )
+                           (assoc params :page template)
                            selmer-opts)
        (ok)
        (content-type "text/html; charset=utf-8")))

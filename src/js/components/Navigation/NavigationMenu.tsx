@@ -12,7 +12,7 @@ import {
 
 import { useLocation } from "react-router-dom";
 import "./NavigationMenu.css";
-import { appPages } from "../config/AppPages";
+import { appPages } from "../../config/AppPages";
 
 const NavigationMenu: React.FC = () => {
   const location = useLocation();
