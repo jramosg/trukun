@@ -37,16 +37,20 @@ import '@ionic/react/css/display.css'
 /* import '@ionic/react/css/palettes/dark.always.css'; */
 /* import '@ionic/react/css/palettes/dark.class.css'; */
 import '@ionic/react/css/palettes/dark.system.css'
+import '@ionic/react/css/ionic.bundle.css'
 
 /* Theme variables */
 import './theme/variables.scss'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import axios from 'axios'
 import config from './config/config.json'
 import Map from './features/map/index'
 import SideBar from './components/Navigation/NavigationMenu'
 import NavigationTabs from './components/Navigation/NavigationTabs'
 import { appPages } from './config/AppPages'
+import FallbackLoader from './components/FallbackLoader'
+import User from './pages/User'
+import LanguageSettings from './components/LanguageSettings'
 
 setupIonicReact()
 
@@ -56,24 +60,81 @@ export const Routes: React.FC = () => {
     tab2: Tab2,
     tab3: Tab3,
     mapa: Map,
+    me: User,
   }
 
-  return (
-    <>
-      {appPages.map(({ url, id }) => {
-        const PageComponent = pageComponents[id]
-        return (
-          <Route exact key={id} path={url}>
-            <PageComponent />
-          </Route>
-        )
-      })}
-      <Route exact path="/">
-        <Redirect to="/tab1" />
+  return appPages.map(({ urls, id }) => {
+    const PageComponent = pageComponents[id]
+    return (
+      <Route key={id} path={urls[0]}>
+        {PageComponent ? <PageComponent /> : <Redirect to="/tab1" />}
       </Route>
-    </>
+    )
+  })
+}
+
+const pageComponents: Record<string, React.FC> = {
+  tab1: Tab1,
+  tab2: Tab2,
+  tab3: Tab3,
+  mapa: Map,
+  me: User,
+}
+
+const SplitPaneRouting = () => {
+  return (
+    <IonSplitPane className="hidden-md-down" contentId="main">
+      <SideBar />
+      <IonRouterOutlet id="main">
+        {appPages.map(({ urls, id }) => {
+          const PageComponent = pageComponents[id]
+          return (
+            <Route key={id} path={urls[0]}>
+              {PageComponent ? <PageComponent /> : <Redirect to="/tab1" />}
+            </Route>
+          )
+        })}
+        <Route component={User} exact path="/me" />
+        <Route
+          component={LanguageSettings}
+          exact
+          path="/me/settings/language"
+        />
+        <Route exact path="/">
+          <Redirect to="/tab1" />
+        </Route>
+      </IonRouterOutlet>
+    </IonSplitPane>
   )
 }
+
+const TabsRouting = () => {
+  return (
+    <IonTabs className="hidden-md-up">
+      <IonRouterOutlet id="main">
+        {appPages.map(({ urls, id }) => {
+          const PageComponent = pageComponents[id]
+          return (
+            <Route key={id} path={urls[0]}>
+              {PageComponent ? <PageComponent /> : <Redirect to="/tab1" />}
+            </Route>
+          )
+        })}
+        <Route exact path="/me">
+          <User />
+        </Route>
+        <Route exact path="/me/settings/language">
+          <LanguageSettings />
+        </Route>
+        <Route exact path="/">
+          <Redirect to="/tab1" />
+        </Route>
+      </IonRouterOutlet>
+      <NavigationTabs />
+    </IonTabs>
+  )
+}
+
 const App: React.FC = () => {
   // Fetch anti-forgery token and store it in a cookie
   useEffect(() => {
@@ -92,20 +153,12 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <IonReactRouter>
-        <IonSplitPane className="hidden-md-down" contentId="main">
-          <SideBar />
-          <IonRouterOutlet id="main">
-            <Routes />
-          </IonRouterOutlet>
-        </IonSplitPane>
-        <IonTabs className="hidden-md-up">
-          <IonRouterOutlet>
-            <Routes />
-          </IonRouterOutlet>
-          <NavigationTabs />
-        </IonTabs>
-      </IonReactRouter>
+      <Suspense fallback={<FallbackLoader />}>
+        <IonReactRouter>
+          <TabsRouting />
+          <SplitPaneRouting />
+        </IonReactRouter>
+      </Suspense>
     </IonApp>
   )
 }

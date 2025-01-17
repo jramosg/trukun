@@ -55,7 +55,7 @@ const baseQueryWithReauth: BaseQueryFn<
 
 export const api = createApi({
   baseQuery: baseQueryWithReauth,
-  tagTypes: ['Post', 'User'], // Add tagTypes shared across modules
+  tagTypes: ['User'], // Add tagTypes shared across modules
   endpoints: () => ({}), // Empty for now; endpoints will be added later
 })
 
