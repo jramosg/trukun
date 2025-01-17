@@ -7,6 +7,7 @@ const usersApi = api.injectEndpoints({
     // GET /users - Fetch all users
     getUsers: build.query<NewUser[], void>({
       query: () => '/users',
+      providesTags: ['User'],
     }),
 
     // POST /user - Add a new user
@@ -15,6 +16,7 @@ const usersApi = api.injectEndpoints({
         url: '/user',
         method: 'POST',
         body: newUser,
+        providesTags: ['User'],
       }),
     }),
   }),

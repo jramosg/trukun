@@ -13,27 +13,28 @@ import {
 import { useLocation } from 'react-router-dom'
 import './NavigationMenu.css'
 import { appPages } from '../../config/AppPages'
+import { useTranslation } from 'react-i18next'
 
 const NavigationMenu: React.FC = () => {
   const location = useLocation()
-
+  const { t } = useTranslation()
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="navigation-list">
           <IonListHeader>Trukun</IonListHeader>
-          <IonNote>Ongi etorri!</IonNote>
-          {appPages.map((appPage, index) => {
+          <IonNote>{t('welcome')}</IonNote>
+          {appPages.map((appPage) => {
             return (
-              <IonMenuToggle autoHide={false} key={index}>
+              <IonMenuToggle autoHide={false} key={appPage.id}>
                 <IonItem
                   className={
-                    location.pathname === appPage.url ? 'selected' : ''
+                    appPage.urls.includes(location.pathname) ? 'selected' : ''
                   }
                   detail={false}
                   lines="none"
-                  routerDirection="none"
-                  routerLink={appPage.url}
+                  routerDirection="forward"
+                  routerLink={appPage.urls[0]}
                 >
                   <IonIcon
                     aria-hidden="true"
@@ -41,7 +42,7 @@ const NavigationMenu: React.FC = () => {
                     md={appPage.mdIcon}
                     slot="start"
                   />
-                  <IonLabel>{appPage.title}</IonLabel>
+                  <IonLabel>{t(`navigation-items.${appPage.id}`)}</IonLabel>
                 </IonItem>
               </IonMenuToggle>
             )

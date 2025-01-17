@@ -106,6 +106,16 @@ const Tab1: React.FC = () => {
     )
   }
 
+  const handleEmailInputChange = useCallback(
+    (e: CustomEvent) => handleInputChange(e, 'email'),
+    [],
+  )
+
+  const handlePasswordInputChange = useCallback(
+    (e: CustomEvent) => handleInputChange(e, 'password'),
+    [],
+  )
+
   return (
     <IonPage>
       <Header title="Tab 1" />
@@ -115,21 +125,13 @@ const Tab1: React.FC = () => {
             <IonTitle size="large">Tab 1</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <img
-          alt=""
-          src="/img/kit.png"
-          style={{
-            height: '200px',
-            width: '200px',
-          }}
-        />
 
         <form className="ion-padding" onSubmit={handleSubmit}>
           <IonInput
             fill="solid"
             labelPlacement="floating"
             name="email" // Set the input name for email
-            onIonInput={(e) => handleInputChange(e, 'email')}
+            onIonInput={handleEmailInputChange}
             type="email"
             value={newUser.email} // Bind email state to the input
           >
@@ -139,7 +141,7 @@ const Tab1: React.FC = () => {
             fill="solid"
             labelPlacement="floating"
             name="password" // Set the input name for password
-            onIonInput={(e) => handleInputChange(e, 'password')}
+            onIonInput={handlePasswordInputChange}
             type="password"
             value={newUser.password} // Bind password state to the input
           >
